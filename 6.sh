@@ -15,6 +15,7 @@ export SUBARCH=arm64
 TOOLDIR="$PWD"
 KERNEL_DIR="op6"
 NAME="HenTaiKernel"
+WORK="PY"
 ZIP="AnyKernel3"
 CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos4721"
@@ -33,8 +34,8 @@ nocol='\033[0m'
 ############################################################
 # Download Files
 ############################################################
-git clone https://github.com/Boos4721/op6_kernel.git $KERNEL_DIR
-git clone https://github.com/Boos4721/clang.git --depth=1 $CLANG
+git clone git@github.com:Boos4721/op6_kernel.git $KERNEL_DIR
+git clone git@github.com:Boos4721/clang.git --depth=1 $CLANG
 
 ############################################################
 # Clang Config
@@ -71,7 +72,7 @@ compile
 # Move file to Anykernel folders
 ############################################################
     rm -rf $NAME
-    git clone https://github.com/Boos4721/AnyKernel3.git  ~/$NAME
+    git clone git@github.com:Boos4721/AnyKernel3.git  ~/$NAME
     cp ~/$KERNEL_DIR/$OUTDIR/arch/arm64/boot/Image.gz-dtb ~/$NAME/Image.gz-dtb
 	echo "  File moved to $ZIP directory"
 
@@ -80,11 +81,10 @@ compile
 ############################################################
 	cd  ~/$NAME
 	zip -r $NAME-$VER.zip *
-    echo "  Clean Cache...."
-    rm -rf ~/*.zip && rm -rf ~1/*.zip
-    mv $NAME-$VER.zip ~/1/$NAME-$VER.zip
-    cd ~/1 && git add . && git commit -s -m "? " && git push -f
-    echo "  $NAME On Github ,Vist Github Enjoy It!"
+    git clone git@github.com:Boos4721/updater.git -b kernel $WORK
+    rm -rf ~/*.zip && rm -rf ~$WORK/*.zip
+    mv $NAME-$VER.zip ~/$WORK/$NAME-$VER.zip 
+    cd ~/$WORK && git add . && git commit -s -m "? " && git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
