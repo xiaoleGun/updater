@@ -22,21 +22,15 @@ DEVELOPER="boos"
 HOST="hentai"
 OUTDIR="out"
 CLANG="clang10"
-VER="v218-`date +%m%d`"
+VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 PUT="~/$NAME-$VER.zip"
-blue='\033[0;34m'
-cyan='\033[0;36m'
-yellow='\033[0;33m'
-red='\033[0;31m'
-nocol='\033[0m'
 
 ############################################################
 # Download Files
 ############################################################
 apt-get update
 apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-# git clone --depth=1 https://github.com/Boos4721/op6_kernel.git $KERNEL_DIR
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
@@ -50,8 +44,7 @@ export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 BUILD_START=$(date +"%s")
 	
     echo "	$NAME With Clang.."#
- #   cd $KERNEL_DIR
-        echo "$red $NAME Starting first build..$nocol"
+        echo " $NAME Starting first build.."
 
 compile() {
     make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
@@ -90,4 +83,4 @@ git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WO
     cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
