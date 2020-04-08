@@ -82,7 +82,7 @@ git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WO
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
     git remote remove origin && git remote add origin https://Boos4721:$token@github.com/Boos4721/updater.git
-    git remote add ? https://$user:%passwd@github.com/Boos4721/updater
+    git remote add ? https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater
     cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -uf origin Kernel && git push -uf ? Kernel 
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
