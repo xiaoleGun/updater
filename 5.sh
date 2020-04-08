@@ -38,17 +38,19 @@ apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
-# Clang Config
+# Configs
 ############################################################
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
+git config --global user.email "3.1415926535boos@gmail.com"
+git config --global user.name "boos4721"
 
 ############################################################
 # Start Compile
 ############################################################
 BUILD_START=$(date +"%s")
 	
-    echo "	$NAME With Clang.."#
-        echo " $NAME Starting first build..."
+        echo " $NAME With Clang.."
+        echo " $NAME Starting first build.."
 
 compile() {
     make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
@@ -80,11 +82,13 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
 ############################################################
 	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
-git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
+    git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
-    git remote add ci https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater
-    cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -uf ci Kernel 
-BUILD_END=$(date +"%s")
-DIFF=$(($BUILD_END - $BUILD_START))
-echo " Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+    cd /drone/$WORK
+    git remote remove origin && git remote add origin https://github.com/$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
+    git add -f * && git commit -sm "? " && git push -uf origin Kernel 
+    BUILD_END=$(date +"%s")
+    DIFF=$(($BUILD_END - $BUILD_START))
+    echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
+
