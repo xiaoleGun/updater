@@ -13,7 +13,6 @@ export SUBARCH=arm64
 # Build Script Variables
 ############################################################
 TOOLDIR="$PWD"
-KERNEL_DIR="op6"
 NAME="HenTaiKernel"
 WORK="PY"
 ZIP="AnyKernel3"
