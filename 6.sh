@@ -83,7 +83,7 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  ~/$NAME
 ############################################################
 	cd  ~/$NAME
 	zip -r $NAME-$VER.zip *
-git clone --depth=1 https://github.com/Boos4721/updater.git -b kernel $WORK
+git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel $WORK
     rm -rf ~/*.zip && rm -rf ~$WORK/*.zip
     mv $NAME-$VER.zip ~/$WORK/$NAME-$VER.zip 
     cd ~/$WORK && git add . && git commit -s -m "? " && git push -f
