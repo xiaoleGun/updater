@@ -83,15 +83,12 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
 ############################################################
 	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
-git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
+git clone --depth=1 https://Boos4721:$token@github.com/Boos4721/updater.git -b Kernel /drone/$WORK
     rm -rf ~/*.zip && rm -rf ~/drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip
     cd /drone/$WORK 
-    git remote remove origin
-    git remote add origin https://username:token@github.com/Boos4721/updater.git
-    git add . && git commit -s -m "? "
-    git push -uf origin Kernel
-    
+    git add . && git commit -s -m "? " 
+    git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
