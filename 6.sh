@@ -23,7 +23,6 @@ OUTDIR="out"
 CLANG="clang10"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
-PUT="~/$NAME-$VER.zip"
 
 ############################################################
 # Download Files
@@ -77,7 +76,7 @@ compile
     zip -r $NAME-$VER.zip *
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
-    cd /drone/$WORK
+    cd /drone/$WORK/$NAME
     git remote remove origin && git remote add origin https://$gayhub_username:%token@github.com/Boos4721/updater.git
     git add $NAME-$VER.zip && git commit -sm "? " && git push -u --force origin Kernel 
     BUILD_END=$(date +"%s")
