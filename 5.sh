@@ -13,18 +13,15 @@ export SUBARCH=arm64
 # Build Script Variables
 ############################################################
 TOOLDIR="$PWD"
-KERNEL_DIR="op5"
 NAME="PixelKernel"
 WORK="PY"
 ZIP="AnyKernel3"
 CONFIG_FILE="pixel_defconfig"
 DEVELOPER="boos"
-HOST="hentai"
+HOST="pixel"
 OUTDIR="out"
 CLANG="clang10"
-VER="v216-`date +%m%d`"
-QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
-PUT="~/$NAME-$VER.zip"
+VER="v218-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 PUT="~/$NAME-$VER.zip"
 blue='\033[0;34m'
@@ -36,8 +33,9 @@ nocol='\033[0m'
 ############################################################
 # Download Files
 ############################################################
-git clone git@github.com:Boos4721/op5_kernel.git $KERNEL_DIR
-git clone git@github.com:Boos4721/clang.git --depth=1 $CLANG
+apt-get update
+apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
 # Clang Config
@@ -49,8 +47,7 @@ export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 ############################################################
 BUILD_START=$(date +"%s")
 	
-    echo "	$NAME With Clang.."
-    cd $KERNEL_DIR
+    echo "	$NAME With Clang.."#
         echo "$red $NAME Starting first build..$nocol"
 
 compile() {
@@ -74,22 +71,20 @@ compile
 # Move file to Anykernel folders
 ############################################################
     rm -rf $NAME
-    git clone git@github.com:Boos4721/AnyKernel3.git -b op5/5t  ~/$NAME
-    cp ~/$KERNEL_DIR/$OUTDIR/arch/arm64/boot/Image.gz-dtb ~/$NAME/Image.gz-dtb
+git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
+    cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
 	echo "  File moved to $ZIP directory"
 
 ############################################################
 # Build the zip for TWRP flashing
 ############################################################
-	cd  ~/$NAME
+	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
-    echo "  Clean Cache...."
-    git clone git@github.com:Boos4721/updater.git -b kernel $WORK
-    rm -rf ~/*.zip && rm -rf ~$WORK/*.zip
-    mv $NAME-$VER.zip ~/$WORK/$NAME-$VER.zip 
-    cd ~/$WORK && git add . && git commit -s -m "? " && git push -f
-    echo "  $NAME On Github ,Vist Github Enjoy It!"
-    rm -rf  ~/$NAME
+git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
+    rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
+    mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
+    git remote remove origin && git remote add origin https://boos4721:$token@github.com/Boos4721/updater.git
+    cd /drone/$WORK && git commit -asm "$(date +'%H%M-%d%m%y') " && git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
