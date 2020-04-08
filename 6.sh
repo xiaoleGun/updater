@@ -78,9 +78,9 @@ compile
 	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
-    rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
+    rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip/drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
-    cd /drone/$WORK
+    cd /drone/$WORK/$NAME
     git remote remove origin && git remote add origin https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
     git add -f * && git commit -sm "? " && git push -uf origin Kernel 
     BUILD_END=$(date +"%s")
