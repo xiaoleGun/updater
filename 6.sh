@@ -73,8 +73,8 @@ compile
 ############################################################
 # Build the zip for TWRP flashing
 ############################################################
-	cd  /drone/$NAME
-	zip -r $NAME-$VER.zip *
+    cd  /drone/$NAME
+    zip -r $NAME-$VER.zip *
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
