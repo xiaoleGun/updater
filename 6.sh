@@ -49,8 +49,8 @@ export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 ############################################################
 BUILD_START=$(date +"%s")
 	
-#    echo "	$NAME With Clang.."
-    cd $KERNEL_DIR
+    echo "	$NAME With Clang.."#
+ #   cd $KERNEL_DIR
         echo "$red $NAME Starting first build..$nocol"
 
 compile() {
