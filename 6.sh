@@ -36,7 +36,7 @@ nocol='\033[0m'
 ############################################################
 apt-get update
 apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-git clone --depth=1 https://github.com/Boos4721/op6_kernel.git $KERNEL_DIR
+# git clone --depth=1 https://github.com/Boos4721/op6_kernel.git $KERNEL_DIR
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
