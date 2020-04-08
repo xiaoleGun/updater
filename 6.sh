@@ -44,7 +44,7 @@ git config --global user.name "boos4721"
 ############################################################
 BUILD_START=$(date +"%s")
 	
-    echo "	$NAME With Clang.."#
+        echo " $NAME With Clang.."
         echo " $NAME Starting first build.."
 
 compile() {
