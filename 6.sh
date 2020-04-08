@@ -74,19 +74,19 @@ compile
 # Move file to Anykernel folders
 ############################################################
     rm -rf $NAME
-git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  ~/$NAME
-    cp ~/$KERNEL_DIR/$OUTDIR/arch/arm64/boot/Image.gz-dtb ~/$NAME/Image.gz-dtb
+git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
+    cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
 	echo "  File moved to $ZIP directory"
 
 ############################################################
 # Build the zip for TWRP flashing
 ############################################################
-	cd  ~/$NAME
+	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
-git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel $WORK
-    rm -rf ~/*.zip && rm -rf ~$WORK/*.zip
-    mv $NAME-$VER.zip ~/$WORK/$NAME-$VER.zip 
-    cd ~/$WORK && git add . && git commit -s -m "? " && git push -f
+git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
+    rm -rf ~/*.zip && rm -rf ~/drone/$WORK/*.zip
+    mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
+    cd /drone/$WORK && git add . && git commit -s -m "? " && git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
