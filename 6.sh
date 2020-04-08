@@ -34,9 +34,11 @@ apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
-# Clang Config
+# Configs
 ############################################################
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
+git config --global user.email 3.1415926535boos@gmail.com
+git config --global user.name boos4721
 
 ############################################################
 # Start Compile
