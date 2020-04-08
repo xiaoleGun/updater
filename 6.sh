@@ -67,19 +67,16 @@ compile
 ############################################################
 # Move file to Anykernel folders
 ############################################################
-    rm -rf $NAME
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  -b op6/6t /drone/$NAME
     cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
-    echo "  File moved to $ZIP directory"
-
+    
 ############################################################
 # Build the zip for TWRP flashing
 ############################################################
 	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
-    rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip/drone/$WORK/$NAME
-    mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
+    mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
     git remote remove origin && git remote add origin https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
     git add -f * && git commit -sm "? " && git push -uf origin Kernel 
