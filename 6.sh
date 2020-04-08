@@ -87,7 +87,7 @@ git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WO
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
     git remote remove origin && git remote add origin https://boos4721:$token@github.com/Boos4721/updater.git
-    cd /drone/$WORK && git commit -asm "? " && git push -f
+    cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -f
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
