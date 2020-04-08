@@ -25,18 +25,18 @@ VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 ############################################################
-# Configs
-############################################################
-export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
-git config --global user.email 3.1415926535boos@gmail.com
-git config --global user.name Boos4721
-
-############################################################
 # Download Files
 ############################################################
 apt-get update
 apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+git config --global user.email 3.1415926535boos@gmail.com
+git config --global user.name Boos4721
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
+
+############################################################
+# Configs
+############################################################
+export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 
 ############################################################
 # Start Compile
