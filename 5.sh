@@ -73,7 +73,7 @@ compile
 # Move file to Anykernel folders
 ############################################################
     rm -rf $NAME
-git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git -b op5/5t /drone/$NAME
     cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
 	echo "  File moved to $ZIP directory"
 
@@ -86,7 +86,7 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
     cd /drone/$WORK
-    git remote remove origin && git remote add origin https://github.com/$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
+    git remote remove origin && git remote add origin https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
     git add -f * && git commit -sm "? " && git push -uf origin Kernel 
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
