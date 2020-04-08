@@ -22,7 +22,7 @@ DEVELOPER="boos"
 HOST="hentai"
 OUTDIR="out"
 CLANG="clang10"
-VER="v216-`date +%m%d`"
+VER="v218-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 PUT="~/$NAME-$VER.zip"
 blue='\033[0;34m'
@@ -34,8 +34,10 @@ nocol='\033[0m'
 ############################################################
 # Download Files
 ############################################################
-git clone git@github.com:Boos4721/op6_kernel.git $KERNEL_DIR
-git clone git@github.com:Boos4721/clang.git --depth=1 $CLANG
+apt-get update
+apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-de
+git clone --depth=1 https://github.com/Boos4721/op6_kernel.git $KERNEL_DIR
+git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
 # Clang Config
