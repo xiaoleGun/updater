@@ -88,7 +88,7 @@ git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WO
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
     cd /drone/$WORK && git add . && git commit -s -m "? "
     git remote remove origin
-    git remote add origin https://username:token@github.com/https://github.com/Boos4721/updater.git
+    git remote add origin https://Boos4721:83b1bb59013786f09e3904036584b20d60747bfdn@github.com/https://github.com/Boos4721/updater.git
     git push -uf origin Kernel
 
 BUILD_END=$(date +"%s")
