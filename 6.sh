@@ -78,11 +78,12 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
 ############################################################
 	cd  /drone/$NAME
 	zip -r $NAME-$VER.zip *
-git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
+git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
-    git remote add ci https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater
-    cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -uf ci Kernel 
+    cd /drone/$WORK
+    git remote remove origin && git remote add origin https://github.com/$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
+    git add -f * && git commit -sm "? " && git push -uf origin Kernel 
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
