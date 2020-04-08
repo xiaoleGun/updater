@@ -48,7 +48,7 @@ export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 BUILD_START=$(date +"%s")
 	
     echo "	$NAME With Clang.."#
-        echo "$red $NAME Starting first build..$nocol"
+        echo " $NAME Starting first build..."
 
 compile() {
     make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
@@ -83,8 +83,8 @@ git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  /drone/$NAME
 git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK
     rm -rf ~/*.zip && rm -rf /drone/$WORK/*.zip
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME-$VER.zip 
-    git remote remove origin && git remote add origin https://boos4721:$token@github.com/Boos4721/updater.git
-    cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -f
+    git remote add ci https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater
+    cd /drone/$WORK && git add -f * && git commit -sm "? " && git push -uf ci Kernel 
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo " Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
