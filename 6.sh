@@ -5,13 +5,13 @@
 # Default Settings
 export ARCH=arm64
 export SUBARCH=arm64
+export HOME=/drone
+export TZ=":Asia/China"
 
 ############################################################
 # Build Script Variables
 ############################################################
 TOOLDIR="$PWD"
-export HOME=/drone
-export TZ=":Asia/China"
 NAME="HenTaiKernel"
 WORK="push"
 ZIP="AnyKernel3"
@@ -38,9 +38,6 @@ clean(){
 }
     
 clone() {
-    git config --global user.email 3.1415926535boos@gmail.com
-    git config --global user.name boos4721
-    git config --system --unset credential.helper
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/AnyKernel3.git ~/$ZIP
@@ -75,7 +72,9 @@ mkzip() {
 
 push() {
     cd ~/$WORK
-    git add --all .
+    git config --global user.email 3.1415926535boos@gmail.com
+    git config --global user.name boos4721
+    git add  -f --a
     git config credential.helper
     git remote set-url origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git
     git commit -m "[CI Build-$rel_date] $short_commit"
