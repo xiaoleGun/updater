@@ -53,7 +53,7 @@ zip() {
     cp  $OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
-    mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME
+    mkdir /drone/$WORK && cd /drone/$WORK && mkdir $NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
 }
 
