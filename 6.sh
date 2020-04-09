@@ -19,7 +19,7 @@ DEVELOPER="boos"
 HOST="hentai"
 OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang"
-VER="v219-`date +%m%d-%H%S`"
+VER="`date +%m%d-%H%S`"
 rel_date=$(date "+%Y%m%e-%H%S"|sed 's/[ ][ ]*/0/g')
 short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
@@ -79,8 +79,6 @@ push() {
     cd ~/$WORK
     git add .
     git commit -m "[CI Build-$rel_date] $short_commit"
-    git remote remove origin 
-    git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git  
     git push -f https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
 }
 
