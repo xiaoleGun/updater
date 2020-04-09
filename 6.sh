@@ -35,11 +35,11 @@ clean(){
 	rm -rf ~/$ZIP
         rm -rf ~/$WORK
 }
-
-    git config --global user.email 3.1415926535boos@gmail.com
-    git config --global user.name boos4721
     
 clone() {
+    git config --global user.email 3.1415926535boos@gmail.com
+    git config --global user.name boos4721
+    git config --system --unset credential.helper
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/AnyKernel3.git ~/$ZIP
