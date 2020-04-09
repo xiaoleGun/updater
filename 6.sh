@@ -30,17 +30,15 @@ config() {
       git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 }
 
-export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
-
-BUILD_START=$(date +"%s")
-	
+compile() {
+        export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
+        BUILD_START=$(date +"%s")	
         echo " $NAME With Clang.."
         echo " $NAME Starting first build.."
 
-compile() {
-    make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
-    PATH="${TOOLDIR}/$CLANG/bin:${PATH}" \
-    make $QWQ O="${OUTDIR}" \
+        make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
+        PATH="${TOOLDIR}/$CLANG/bin:${PATH}" \
+        make $QWQ O="${OUTDIR}" \
         ARCH=arm64 \
         CC+=clang \
         CLANG_TRIPLE+=aarch64-linux-gnu- \
