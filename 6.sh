@@ -50,14 +50,14 @@ compile() {
 
 zip() {
     rm -rf /drone/$NAME
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME || exit
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME
     mv  /drone/src/$OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
 }
 
 move() {
-    mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME || exit
+    mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
 }
 
