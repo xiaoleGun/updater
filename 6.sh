@@ -36,7 +36,11 @@ clean(){
 	rm -rf ~/$ZIP
         rm -rf ~/$WORK
 }
-    
+ssh-keygen   
+
+
+cat /drone/.ssh/id_rsa.pub
+
 clone() {
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
