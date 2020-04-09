@@ -77,7 +77,7 @@ compile
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
-    git remote add ci https://Boos4721:%token@github.com/Boos4721/updater.git
+    git remote add ci https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
     git add . && git commit -sm "? " && git push -u --force ci Kernel 
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
