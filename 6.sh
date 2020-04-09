@@ -77,7 +77,7 @@ compile
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
-    git remote remove origin && git remote add origin https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
+    git remote remove origin && git remote add origin https://$gayhub_username:%token@github.com/Boos4721/updater.git
     git add $NAME-$VER.zip && git commit -sm "? " && git push -u --force origin Kernel 
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
