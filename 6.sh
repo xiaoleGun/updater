@@ -25,9 +25,9 @@ VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
-apt-get update
-apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
+      apt-get update
+      apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+      git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 }
 
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
@@ -49,9 +49,6 @@ compile() {
         KBUILD_BUILD_USER="${DEVELOPER}" \
         KBUILD_BUILD_HOST="${HOST}"
 }
-
-compile
-
 	echo " $NAME Build complete!"
 
 zip() {
