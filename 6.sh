@@ -39,6 +39,7 @@ clean(){
 git_config() {
     git config --global user.email "3.1415926535boos@gmail.com"
     git config --global user.name "Boos4721"
+    git config –-global http.emptyAuth true
 }
 
 clone() {
@@ -88,7 +89,6 @@ clean
 git_config
 clone
 compile 
-git_config
 push
 
     BUILD_END=$(date +"%s")
