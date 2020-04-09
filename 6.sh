@@ -37,8 +37,8 @@ clean(){
 }
 
 git_config() {
-    git config --global user.email "3.1415926535boos@gmail.com"
-    git config --global user.name "Boos4721"
+    git config --global user.email 3.1415926535boos@gmail.com
+    git config --global user.name boos4721
 }
 
 clone() {
