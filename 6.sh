@@ -19,7 +19,7 @@ ZIP="AnyKernel3"
 CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos"
 HOST="hentai"
-OUTFILE="out/arch/arm64/boot/Image.gz-dtb"
+OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang10"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
@@ -52,7 +52,7 @@ zip() {
     rm -rf /drone/$NAME
     cd /drone
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git $NAME
-    mv  /drone/src/$OUTFILE /drone/$NAME/Image.gz-dtb
+    mv  $OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
 }
