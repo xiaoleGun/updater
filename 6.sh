@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-######################################################
-# Copyright (C) 2019 @Boos4721(Telegram and Github)  #
-#                                                    #
-# SPDX-License-Identifier: GPL-3.0-or-later          #
-#                                                    #
-######################################################
+
+# Kernel CI Builder
+# Copyright (C) 2019 @Boos4721(Telegram and Github)  
 # Default Settings
 export ARCH=arm64
 export SUBARCH=arm64
