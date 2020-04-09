@@ -50,7 +50,7 @@ compile() {
 }
 
 zip() {
-    mv  $OUTFILE /drone/$NAME/
+    cp  $OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
     mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME
