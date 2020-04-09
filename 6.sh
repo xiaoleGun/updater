@@ -37,7 +37,8 @@ clean(){
 }
 
 clone() {
-    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
+#    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
+    git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
     git clone --depth=1 https://github.com/Boos4721/updater.git ~/$WORK
     }
