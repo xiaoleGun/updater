@@ -78,6 +78,8 @@ push() {
     cd ~/$WORK
     git add .
     git commit -m "[CI Build-$rel_date] $short_commit"
+    git remote remove origin 
+    git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git  
     git push -f https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
 }
 
