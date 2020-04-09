@@ -27,14 +27,21 @@ QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 config() {
     apt-get update
     apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
 }
 
 clean(){
 	make mrproper
 	make $QWQ mrproper
+	rm -rf ~/$ZIP
+        rm -rf ~/$WORK
 }
 
+clone() {
+    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
+    git clone --depth=1 https://github.com/Boos4721/updater.git ~/$WORK
+    }
+    
 compile() {
     echo " $NAME With Clang.."
     echo " $NAME Starting first build.."
@@ -55,7 +62,6 @@ compile() {
 }
 
 mkzip() {
-    rm -rf /drone/$NAME
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
@@ -71,16 +77,15 @@ git_config() {
 
 push() {
     cd ~/$WORK
-    git init
     git add .
-    git checkout -b Kernel
     git commit -sm "? " 
     git remote add ci https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
-    git push -u ci Kernel 
+    git push -uf ci Kernel 
 }
 
 config
 clean
+clone
 compile  
 git_config
 push
