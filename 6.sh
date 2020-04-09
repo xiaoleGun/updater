@@ -20,15 +20,14 @@ CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos"
 HOST="hentai"
 OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
-CLANG="clang10"
+CLANG="clang"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
     apt-get update
     apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-    git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME
+    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
 }
 
 compile() {
@@ -50,6 +49,7 @@ compile() {
 }
 
 zip() {
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME
     cp  $OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
