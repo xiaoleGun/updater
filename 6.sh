@@ -11,6 +11,7 @@ export SUBARCH=arm64
 ############################################################
 TOOLDIR="$PWD"
 export HOME=/drone
+export TZ=":Asia/China"
 NAME="HenTaiKernel"
 WORK="push"
 ZIP="AnyKernel3"
@@ -74,7 +75,9 @@ mkzip() {
 
 push() {
     cd ~/$WORK
-    git add --all
+    git add --all .
+    git config credential.helper
+    git remote set-url origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git
     git commit -m "[CI Build-$rel_date] $short_commit"
     git push -f
 }
