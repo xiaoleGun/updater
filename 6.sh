@@ -78,7 +78,7 @@ push() {
     git config credential.helper
     git remote set-url origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git
     git commit -m "[CI Build-$rel_date] $short_commit"
-    git push -f
+    git push -u origin Kernel
 }
 
 config
