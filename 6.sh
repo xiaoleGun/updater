@@ -25,9 +25,9 @@ VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
-      apt-get update
-      apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-      git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
+    apt-get update
+    apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+    git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 }
 
 compile() {
@@ -80,6 +80,7 @@ zip
 move
 git_config
 push
+
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
