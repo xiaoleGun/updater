@@ -29,8 +29,8 @@ QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 ############################################################
 apt-get update
 apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-git config --global user.email 3.1415926535boos@gmail.com
-git config --global user.name Boos4721
+git config --global user.email "3.1415926535boos@gmail.com"
+git config --global user.name "Boos4721"
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 
 ############################################################
@@ -77,6 +77,8 @@ compile
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
+    git config --global user.email "3.1415926535boos@gmail.com"
+    git config --global user.name "Boos4721"
     git remote remove origin && git remote add origin https://$gayhub_username:%token@github.com/Boos4721/updater.git
     git add $NAME-$VER.zip && git commit -sm "? " && git push -u --force origin Kernel 
     BUILD_END=$(date +"%s")
