@@ -78,7 +78,7 @@ push() {
     cd ~/$WORK
     git add --all
     git commit -m "[CI Build-$rel_date] $short_commit"
-    git push -f https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
+    git push -f
 }
 
 config
