@@ -45,7 +45,7 @@ clone() {
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/AnyKernel3.git ~/$ZIP
-    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git  ~/$WORK
+    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git -b Kernel ~/$WORK
     }
     
 compile() {
@@ -78,7 +78,7 @@ push() {
     cd ~/$WORK
     git add .
     git commit -m "[CI Build-$rel_date] $short_commit"
-    git push https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
+    git push -f https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git Kernel
 }
 
 config
