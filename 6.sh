@@ -49,6 +49,7 @@ compile() {
 }
 
 zip() {
+    rm -rf /drone/$NAME
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME || exit
     mv  /drone/src/$OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
