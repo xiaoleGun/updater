@@ -73,9 +73,11 @@ push() {
     cd ~/$WORK
     git init
     git add .
+    git branch Kernel
+    git checkout -b Kernel
     git commit -sm "? " 
     git remote add ci https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
-    git push -f ci Kernel 
+    git push -u ci Kernel 
 }
 
 config
