@@ -77,7 +77,7 @@ compile
     cd /drone/$WORK/$NAME
     git config --global user.email "3.1415926535boos@gmail.com"
     git config --global user.name "Boos4721"
-    git remote add ci https://$gayhub_username:%token@github.com/Boos4721/updater.git
+    git remote add ci https://$gayhub_username:$token@github.com/Boos4721/updater.git
     git add . && git commit -sm "? " && git push -uf ci Kernel 
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
