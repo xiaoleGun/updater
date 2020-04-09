@@ -35,8 +35,6 @@ git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 # Configs
 ############################################################
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
-git config --global user.email "3.1415926535boos@gmail.com"
-git config --global user.name "Boos4721"
 
 ############################################################
 # Start Compile
@@ -77,8 +75,10 @@ compile
     git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
     cd /drone/$WORK/$NAME
-    git remote add ci https://$gayhub_username:%gayhub_passwd@github.com/Boos4721/updater.git
-    git add . && git commit -sm "? " && git push -u --force ci Kernel 
+    git config --global user.email "3.1415926535boos@gmail.com"
+    git config --global user.name "Boos4721"
+    git remote add ci https://$gayhub_username:%token@github.com/Boos4721/updater.git
+    git add . && git commit -sm "? " && git push -uf ci Kernel 
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
