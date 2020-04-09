@@ -42,7 +42,7 @@ git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
 ############################################################
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 git config --global user.email "3.1415926535boos@gmail.com"
-git config --global user.name "boos4721"
+git config --global user.name "Boos4721"
 
 ############################################################
 # Start Compile
