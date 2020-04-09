@@ -19,7 +19,7 @@ ZIP="AnyKernel3"
 CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos"
 HOST="hentai"
-OUTDIR="out"
+OUTFILE="out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang10"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
@@ -51,8 +51,8 @@ compile() {
 }
 
 zip() {
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  -b op6/6t /drone/$NAME
-    cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME || exit
+    mv  /drone/src/$OUTFILE /drone/$NAME/Image.gz-dtb
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
 }
@@ -73,7 +73,7 @@ push() {
     git add . 
     git commit -sm "? " 
     git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
-    git push -uf origin Kernel 
+    git push --force origin Kernel 
 }
 
 config
