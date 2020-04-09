@@ -14,7 +14,7 @@ export SUBARCH=arm64
 ############################################################
 TOOLDIR="$PWD"
 NAME="HenTaiKernel"
-WORK="PY"
+WORK="push"
 ZIP="AnyKernel3"
 CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos"
@@ -23,32 +23,6 @@ OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
-
-print (){
-case ${2} in
-	"red")
-	echo -e "\033[31m $1 \033[0m";;
-
-	"blue")
-	echo -e "\033[34m $1 \033[0m";;
-
-	"yellow")
-	echo -e "\033[33m $1 \033[0m";;
-
-	"purple")
-	echo -e "\033[35m $1 \033[0m";;
-
-	"sky")
-	echo -e "\033[36m $1 \033[0m";;
-
-	"green")
-	echo -e "\033[32m $1 \033[0m";;
-
-	*)
-	echo $1
-	;;
-	esac
-}
 
 config() {
     apt-get update
@@ -98,10 +72,10 @@ git_config() {
 push() {
     cd ~/$WORK
     git init
-    git add -f * 
+    git add .
     git commit -sm "? " 
-    git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
-    git push --force origin Kernel 
+    git remote add ci https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
+    git push -f ci Kernel 
 }
 
 config
