@@ -13,6 +13,7 @@ export SUBARCH=arm64
 # Build Script Variables
 ############################################################
 TOOLDIR="$PWD"
+export HOME=/drone
 NAME="HenTaiKernel"
 WORK="push"
 ZIP="AnyKernel3"
@@ -22,11 +23,13 @@ HOST="hentai"
 OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang"
 VER="v219-`date +%m%d`"
+rel_date=$(date "+%Y%m%e-%H%S"|sed 's/[ ][ ]*/0/g')
+short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
     apt-get update
-    apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+    apt-get update && apt-get install -y sudo cpio clang liblz4-dev zipalign p7zip fakeroot liblz4-tool liblz4-1 gcc make bc curl git zip zstd flex libc6 libstdc++6 libgnutls30 ccache gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
 }
 
 clean(){
@@ -40,7 +43,7 @@ clone() {
 #    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
-    git clone --depth=1 https://github.com/Boos4721/updater.git ~/$WORK
+    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git  ~/$WORK
     }
     
 compile() {
@@ -67,7 +70,6 @@ mkzip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
-    mkdir ~/$WORK && cd ~/$WORK && mkdir $NAME
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
 }
 
@@ -79,9 +81,8 @@ git_config() {
 push() {
     cd ~/$WORK
     git add .
-    git commit -sm "? " 
-    git remote add ci https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
-    git push -uf ci Kernel 
+    git commit -m "[$(cat /drone/src/version)-$rel_date] CI Build $short_commit"
+    git push https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
 }
 
 config
