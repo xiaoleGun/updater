@@ -36,10 +36,15 @@ clean(){
         rm -rf ~/$WORK
 }
 
+git_config() {
+    git config --global user.email "3.1415926535boos@gmail.com"
+    git config --global user.name "Boos4721"
+}
+
 clone() {
-#    git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
-    git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
+#    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
+    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
+    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/AnyKernel3.git ~/$ZIP
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git  ~/$WORK
     }
     
@@ -63,30 +68,24 @@ compile() {
 }
 
 mkzip() {
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
 }
 
-git_config() {
-    git config --global user.email "3.1415926535boos@gmail.com"
-    git config --global user.name "Boos4721"
-}
-
 push() {
     cd ~/$WORK
     git add .
-    git commit -m "[$(cat /drone/src/version)-$rel_date] CI Build $short_commit"
+    git commit -m "[CI Build-$rel_date] $short_commit"
     git push https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
 }
 
 config
 clean
+git_config
 clone
 compile  
-git_config
 push
 
     BUILD_END=$(date +"%s")
