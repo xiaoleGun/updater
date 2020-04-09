@@ -37,11 +37,6 @@ clean(){
         rm -rf ~/$WORK
 }
 
-ssh-keygen -t rsa -C"3.1415926535boos@gmai.com" 
-boos
-boos
-cat /drone/.ssh/id_rsa.pub
-
 clone() {
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
@@ -79,12 +74,11 @@ push() {
     cd ~/$WORK
     git config --global --unset credential.helper
     git config --unset credential.helper
-    git config --global user.email 3.1415926535boos@gmail.com
-    git config --global user.name boos4721
+    git config --global user.email "3.1415926535boos@gmail.com"
+    git config --global user.name "boos4721"
     git add  -f --a
-    git remote set-url origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git
     git commit -m "[CI Build-$rel_date] $short_commit"
-    git push -u origin Kernel
+    git push
 }
 
 config
