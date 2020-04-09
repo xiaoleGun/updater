@@ -31,23 +31,21 @@ config() {
 }
 
 compile() {
-        export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
-        BUILD_START=$(date +"%s")	
-        echo " $NAME With Clang.."
-        echo " $NAME Starting first build.."
-
-        make ARCH=arm64 O="${OUTDIR}" "${CONFIG_FILE}"
-        PATH="${TOOLDIR}/$CLANG/bin:${PATH}" \
-        make $QWQ O="${OUTDIR}" \
-        ARCH=arm64 \
-        CC+=clang \
-        CLANG_TRIPLE+=aarch64-linux-gnu- \
-        CROSS_COMPILE+=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32+=arm-linux-gnueabi- \
-        KBUILD_BUILD_USER="${DEVELOPER}" \
-        KBUILD_BUILD_HOST="${HOST}"
-	
-        echo " $NAME Build complete!"
+    echo " $NAME With Clang.."
+    echo " $NAME Starting first build.."
+    BUILD_START=$(date +"%s")
+    export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"	
+    make ARCH=arm64 O="out" "${CONFIG_FILE}"
+    PATH="${TOOLDIR}/$CLANG/bin:${PATH}" \
+    make $QWQ O="out" \
+    ARCH=arm64 \
+    CC+=clang \
+    CLANG_TRIPLE+=aarch64-linux-gnu- \
+    CROSS_COMPILE+=aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32+=arm-linux-gnueabi- \
+    KBUILD_BUILD_USER="${DEVELOPER}" \
+    KBUILD_BUILD_HOST="${HOST}"	
+    echo " $NAME Build complete!"
 }
 
 zip() {
