@@ -39,7 +39,6 @@ clean(){
 git_config() {
     git config --global user.email "3.1415926535boos@gmail.com"
     git config --global user.name "Boos4721"
-    git config –-global http.emptyAuth true
 }
 
 clone() {
@@ -77,7 +76,7 @@ mkzip() {
 
 push() {
     cd ~/$WORK
-    git add .
+    git add --all
     git commit -m "[CI Build-$rel_date] $short_commit"
     git push -f https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git HEAD:Kernel
 }
