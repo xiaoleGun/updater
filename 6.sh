@@ -36,11 +36,9 @@ clean(){
         rm -rf ~/$WORK
 }
 
-git_config() {
     git config --global user.email 3.1415926535boos@gmail.com
     git config --global user.name boos4721
-}
-
+    
 clone() {
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
@@ -83,7 +81,6 @@ push() {
 
 config
 clean
-git_config
 clone
 compile 
 push
