@@ -56,8 +56,8 @@ zip() {
     zip -r $NAME-$VER.zip *
 }
 
-make() {
-    mkdir /drone/$WORK/$NAME
+move() {
+    mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME || exit
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
 }
 
@@ -67,7 +67,7 @@ git_config() {
 }
 
 push() {
-    cd /drone/$WORK/$NAME
+    cd /drone/$WORK
     git init
     git add . 
     git commit -sm "? " 
@@ -78,7 +78,7 @@ push() {
 config
 compile  
 zip
-make
+move
 git_config
 push
     BUILD_END=$(date +"%s")
