@@ -46,8 +46,9 @@ compile() {
         CROSS_COMPILE_ARM32+=arm-linux-gnueabi- \
         KBUILD_BUILD_USER="${DEVELOPER}" \
         KBUILD_BUILD_HOST="${HOST}"
+	
+        echo " $NAME Build complete!"
 }
-	echo " $NAME Build complete!"
 
 zip() {
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  -b op6/6t /drone/$NAME
