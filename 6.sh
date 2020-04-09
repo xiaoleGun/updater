@@ -24,10 +24,41 @@ CLANG="clang"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
+print (){
+case ${2} in
+	"red")
+	echo -e "\033[31m $1 \033[0m";;
+
+	"blue")
+	echo -e "\033[34m $1 \033[0m";;
+
+	"yellow")
+	echo -e "\033[33m $1 \033[0m";;
+
+	"purple")
+	echo -e "\033[35m $1 \033[0m";;
+
+	"sky")
+	echo -e "\033[36m $1 \033[0m";;
+
+	"green")
+	echo -e "\033[32m $1 \033[0m";;
+
+	*)
+	echo $1
+	;;
+	esac
+}
+
 config() {
     apt-get update
     apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
     git clone --depth=1 https://github.com/Boos4721/clang.git -b clang-11 $CLANG
+}
+
+clean(){
+	make mrproper
+	make $QWQ mrproper
 }
 
 compile() {
@@ -46,16 +77,17 @@ compile() {
     KBUILD_BUILD_USER="${DEVELOPER}" \
     KBUILD_BUILD_HOST="${HOST}"	
     echo " $NAME Build complete!"
+    mkzip
 }
 
-zip() {
+mkzip() {
     rm -rf /drone/$NAME
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME
-    cp  $OUTFILE /drone/$NAME/Image.gz-dtb
-    cd  /drone/$NAME
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git ~/$ZIP
+    cp -f $OUTFILE ~/$ZIP/
+    cd ~/$ZIP
     zip -r $NAME-$VER.zip *
-    mkdir /drone/$WORK && cd /drone/$WORK && mkdir $NAME
-    mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
+    mkdir ~/$WORK && cd ~/$WORK && mkdir $NAME
+    mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
 }
 
 git_config() {
@@ -64,17 +96,17 @@ git_config() {
 }
 
 push() {
-    cd /drone/$WORK
+    cd ~/$WORK
     git init
-    git add . 
+    git add -f * 
     git commit -sm "? " 
     git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
     git push --force origin Kernel 
 }
 
 config
+clean
 compile  
-zip
 git_config
 push
 
