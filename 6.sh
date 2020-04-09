@@ -24,21 +24,14 @@ CLANG="clang10"
 VER="v219-`date +%m%d`"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
-############################################################
-# Download Files
-############################################################
+config() {
 apt-get update
 apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
 git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
+}
 
-############################################################
-# Configs
-############################################################
 export LD_LIBRARY_PATH="${TOOLDIR}/$CLANG/bin/../lib:$PATH"
 
-############################################################
-# Start Compile
-############################################################
 BUILD_START=$(date +"%s")
 	
         echo " $NAME With Clang.."
@@ -61,24 +54,38 @@ compile
 
 	echo " $NAME Build complete!"
 
-############################################################
-# Move file to Anykernel folders
-############################################################
+zip() {
     git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git  -b op6/6t /drone/$NAME
     cp /drone/src/$OUTDIR/arch/arm64/boot/Image.gz-dtb /drone/$NAME/Image.gz-dtb
-    
-############################################################
-# Build the zip for TWRP flashing
-############################################################
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
-    git clone --depth=1 https://github.com/Boos4721/updater.git -b Kernel /drone/$WORK/$NAME
+}
+
+make() {
+    mkdir /drone/$WORK/$NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
-    cd /drone/$WORK/$NAME
+}
+
+git_config() {
     git config --global user.email "3.1415926535boos@gmail.com"
     git config --global user.name "Boos4721"
-    git remote add ci https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git
-    git add . && git commit -sm "? " && git push -uf ci Kernel 
+}
+
+push() {
+    cd /drone/$WORK/$NAME
+    git init
+    git add . 
+    git commit -sm "? " 
+    git remote add origin https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git 
+    git push -uf origin Kernel 
+}
+
+config
+compile  
+zip
+make
+git_config
+push
     BUILD_END=$(date +"%s")
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
