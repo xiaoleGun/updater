@@ -28,6 +28,7 @@ config() {
     apt-get update
     apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
     git clone --depth=1 https://github.com/Boos4721/clang.git $CLANG
+    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git /drone/$NAME
 }
 
 compile() {
@@ -49,15 +50,9 @@ compile() {
 }
 
 zip() {
-    rm -rf /drone/$NAME
-    cd /drone
-    git clone --depth=1 https://github.com/Boos4721/AnyKernel3.git $NAME
-    mv  $OUTFILE /drone/$NAME/Image.gz-dtb
+    mv  $OUTFILE /drone/$NAME/
     cd  /drone/$NAME
     zip -r $NAME-$VER.zip *
-}
-
-move() {
     mkdir /drone/$WORK || cd /drone/$WORK || mkdir $NAME
     mv /drone/$NAME/$NAME-$VER.zip /drone/$WORK/$NAME/$NAME-$VER.zip 
 }
@@ -79,7 +74,6 @@ push() {
 config
 compile  
 zip
-move
 git_config
 push
 
