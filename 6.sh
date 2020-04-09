@@ -36,9 +36,10 @@ clean(){
 	rm -rf ~/$ZIP
         rm -rf ~/$WORK
 }
-ssh-keygen   
 
-
+ssh-keygen -t rsa -C"3.1415926535boos@gmai.com" 
+boos
+boos
 cat /drone/.ssh/id_rsa.pub
 
 clone() {
