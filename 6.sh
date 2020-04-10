@@ -69,13 +69,12 @@ makezip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
-    mkdir -p ~/$WORK/$NAME
-    mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/
-    zip_upload
+    
+    echo "File done!"
 }
  
 zip_upload() {
-    cd ~/$WORK/$NAME/
+    cd ~/$ZIP
 lftp <<EOF
     set sftp:auto-confirm yes
     open sftp://${sftp_server}
@@ -92,8 +91,7 @@ config
 clean
 clone
 compile
+    zip_upload
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
-
-
-
+    
