@@ -76,7 +76,6 @@ makezip() {
 zip_upload() {
     cd ~/$ZIP
 lftp <<EOF
-    set sftp:auto-confirm yes
     open sftp://${sftp_server}
     user ${sftp_username} ${sftp_pwd}
     cd /home/frs/project/boosroms/enchilada/Hentai_Kernel
