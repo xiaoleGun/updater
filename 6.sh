@@ -53,6 +53,7 @@ sendStick() {
 config() {
     apt-get update
     apt-get update && apt-get install -y sudo cpio clang liblz4-dev zipalign p7zip fakeroot liblz4-tool liblz4-1 gcc make bc curl git zip zstd flex libc6 libstdc++6 libgnutls30 ccache gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+    CLANG_VERSION=$("${CLANG}/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 }
 
 clean(){
@@ -101,6 +102,7 @@ send_Info() {
 	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
                 "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit" \
 		"<b>Branch:</b> <code>$(git branch --show-current)</code>" \
+	        "<b>Compiler:</b> <code>${CLANG_VERSION}</code>" \
  		"<b>Started on:</b> <code>$(hostname)</code>" \
 		"<b>Started at</b> <code>$DATE</code>"
 }
