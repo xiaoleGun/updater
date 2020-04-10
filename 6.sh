@@ -26,9 +26,8 @@ short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
-    apt-get update
-    apt-get update && apt-get install -y sudo cpio clang liblz4-dev zipalign p7zip fakeroot liblz4-tool liblz4-1 gcc make bc curl git zip zstd flex libc6 libstdc++6 libgnutls30 ccache gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
-    CLANG_VERSION=$("${CLANG}/bin/clang" --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+       apt-get update
+       apt-get install -y build-essential bc python curl git zip ftp gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev lftp zstd wget libfl-dev gcc-aarch64-linux-gnu
 }
 
 clean(){
