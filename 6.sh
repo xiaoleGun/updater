@@ -39,7 +39,7 @@ sendInfo() {
 }
 
 sendZip() {
-	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*.zip" https://api.telegram.org/bot/$bot_token/sendDocument
+	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/$NAME-$VER.zip" https://api.telegram.org/bot/$bot_token/sendDocument
 }
 
 sendStick() {
