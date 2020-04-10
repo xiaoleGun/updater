@@ -72,6 +72,7 @@ makezip() {
     zip -r $NAME-$VER.zip *
     mkdir -p ~/$WORK/$NAME
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/
+    zip_upload
 }
  
 zip_upload() {
@@ -92,7 +93,6 @@ config
 clean
 clone
 compile
-zip_upload
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
 
