@@ -87,7 +87,8 @@ compile() {
     KBUILD_BUILD_USER="${DEVELOPER}" \
     KBUILD_BUILD_HOST="${HOST}"	
     echo " $NAME Build complete!"
-    mkzip
+    makezip
+    BUILD_END=$(date +"%s")
 }
 
 makezip() {
@@ -106,17 +107,16 @@ send_Info() {
  		"<b>Started on:</b> <code>$(hostname)</code>" \
 		"<b>Started at</b> <code>$DATE</code>"
 }
-    BUILD_END=$(date +"%s")
-    DIFF=$(($BUILD_END - $BUILD_START))
     
 config
 clean
 clone
 compile
 send_Info
-makezip
 sendZip
-sendInfo   
-echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
+sendInfo  
+    DIFF=$(($BUILD_END - $BUILD_START))
+    echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
+
 
 
