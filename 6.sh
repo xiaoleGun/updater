@@ -25,31 +25,6 @@ rel_date=$(date "+%Y%m%e-%H%S"|sed 's/[ ][ ]*/0/g')
 short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
-###### Telegram Function #####
-BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyoip5fJhgE"
-BUILD_SUCCESS="CAACAgIAAx0CRhgx1QABAT9LXpBD86Cre02Eski1hLdeJ6KyBiUAAjQAA7eWaBsoTrkvia1OJRgE"
-
-sendInfo() {
-    curl -s -X POST https://api.telegram.org/bot/$bot_token/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
-            for POST in "${@}"; do
-                echo "${POST}"
-            done
-        )"
-&>/dev/null
-}
-
-sendZip() {
-	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/$NAME-$VER.zip" https://api.telegram.org/bot/$bot_token/sendDocument
-}
-
-sendStick() {
-	curl -s -X POST https://api.telegram.org/bot/$bot_token/sendSticker -d sticker="${1}" -d chat_id=$chat_id &>/dev/null
-}
-
-
-#####
-
-#########################################################################
 config() {
     apt-get update
     apt-get update && apt-get install -y sudo cpio clang liblz4-dev zipalign p7zip fakeroot liblz4-tool liblz4-1 gcc make bc curl git zip zstd flex libc6 libstdc++6 libgnutls30 ccache gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
@@ -98,23 +73,26 @@ makezip() {
     mkdir -p ~/$WORK/$NAME
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/
 }
-
-send_Info() {
-	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
-                "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit" \
-		"<b>Branch:</b> <code>$(git branch --show-current)</code>" \
-	        "<b>Compiler:</b> <code>${CLANG_VERSION}</code>" \
- 		"<b>Started on:</b> <code>$(hostname)</code>" \
-		"<b>Started at</b> <code>$DATE</code>"
+ 
+zip_upload() {
+    cd ~/$WORK/$NAME/
+lftp <<EOF
+    set sftp:auto-confirm yes
+    open sftp://${sftp_server}
+    user ${sftp_username} ${sftp_pwd}
+    cd /home/frs/projects/boosroms/files/enchilada/Hentai_Kernel
+    mput *.zip
+    bye
+EOF
+ 
+    echo "Sftp uploading done!"
 }
-    
+
 config
 clean
 clone
 compile
-send_Info
-sendZip
-sendInfo  
+zip_upload
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
 
