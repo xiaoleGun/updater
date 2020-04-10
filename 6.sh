@@ -72,13 +72,11 @@ mkzip() {
 
 push() {
     cd ~/$WORK
-    git config --global --unset credential.helper
-    git config --unset credential.helper
     git config --global user.email "3.1415926535boos@gmail.com"
     git config --global user.name "boos4721"
-    git add  -f --a
-    git commit -m "[CI Build-$rel_date] $short_commit"
-    git push
+    git add .
+    git commit -sm "[CI Build-$rel_date] $short_commit"
+    git push https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git Kernel
 }
 
 config
