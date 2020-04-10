@@ -90,12 +90,12 @@ compile() {
     mkzip
 }
 
-mkzip() {
+makezip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
     mkdir -p ~/$WORK/$NAME
-    mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
+    mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/
 }
 
 send_Info() {
@@ -112,10 +112,11 @@ send_Info() {
 config
 clean
 clone
-compile 
-mkzip
-sendZip
+compile
 send_Info
-sendInfo     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
+makezip
+sendZip
+sendInfo   
+echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
 
 
