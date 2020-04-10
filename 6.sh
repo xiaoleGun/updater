@@ -61,7 +61,6 @@ compile() {
     KBUILD_BUILD_USER="${DEVELOPER}" \
     KBUILD_BUILD_HOST="${HOST}"	
     echo " $NAME Build complete!"
-    makezip
     BUILD_END=$(date +"%s")
 }
 
@@ -82,7 +81,6 @@ lftp <<EOF
     mput *.zip
     bye
 EOF
- 
     echo "Sftp uploading done!"
 }
 
@@ -90,7 +88,9 @@ config
 clean
 clone
 compile
-    zip_upload
+makezip
+zip_upload
+
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
     
