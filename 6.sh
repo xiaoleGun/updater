@@ -80,7 +80,7 @@ lftp <<EOF
     set sftp:auto-confirm yes
     open sftp://${sftp_server}
     user ${sftp_username} ${sftp_pwd}
-    cd /home/frs/projects/boosroms/files/enchilada/Hentai_Kernel
+    cd /home/frs/project/boosroms/enchilada/Hentai_Kernel
     mput *.zip
     bye
 EOF
