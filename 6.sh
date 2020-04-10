@@ -101,7 +101,6 @@ mkzip() {
 send_Info() {
 	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
                 "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit"\
-		"<b>Kernel Version:</b> <code>$(make kernelversion)</code>" \
 		"<b>Branch:</b> <code>$(git branch --show-current)</code>" \
  		"<b>Started on:</b> <code>$(hostname)</code>" \
 		"<b>Started at</b> <code>$DATE</code>"
