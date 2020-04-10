@@ -25,6 +25,32 @@ rel_date=$(date "+%Y%m%e-%H%S"|sed 's/[ ][ ]*/0/g')
 short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
+###### Telegram Function #####
+BOT_API_KEY=$(openssl enc -base64 -d <<< "${bot_token}")
+BUILD_FAIL="CAADBQADigADWtMDKL3bJB8yS0yiFgQ"
+BUILD_SUCCESS="CAADBQADXgADWtMDKLZjh6sbUrFbFgQ"
+
+sendInfo() {
+    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
+            for POST in "${@}"; do
+                echo "${POST}"
+            done
+        )"
+&>/dev/null
+}
+
+sendZip() {
+	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*" https://api.telegram.org/bot$BOT_API_KEY/sendDocument
+}
+
+sendStick() {
+	curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendSticker -d sticker="${1}" -d chat_id=$chat_id &>/dev/null
+}
+
+
+#####
+
+#########################################################################
 config() {
     apt-get update
     apt-get update && apt-get install -y sudo cpio clang liblz4-dev zipalign p7zip fakeroot liblz4-tool liblz4-1 gcc make bc curl git zip zstd flex libc6 libstdc++6 libgnutls30 ccache gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
@@ -38,10 +64,11 @@ clean(){
 }
 
 clone() {
+    git config --global user.email 3.1415926535boos@gmail.com
+    git config --global user.name boos4721
 #    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git -b clang-11 $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/clang.git $CLANG
     git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/AnyKernel3.git ~/$ZIP
-    git clone --depth=1 https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git -b Kernel ~/$WORK
     }
     
 compile() {
@@ -67,24 +94,26 @@ mkzip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
+    mkdir -p ~/$WORK/$NAME
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
 }
 
-push() {
-    cd ~/$WORK
-    git config --global user.email "3.1415926535boos@gmail.com"
-    git config --global user.name "boos4721"
-    git add .
-    git commit -sm "[CI Build-$rel_date] $short_commit"
-    git push https://$gayhub_username:$gayhub_passwd@github.com/Boos4721/updater.git Kernel
+send_Info {
+	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
+                "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit"\
+		"<b>Kernel Version:</b> <code>$(make kernelversion)</code>" \
+		"<b>Branch:</b> <code>$(git branch --show-current)</code>" \
+ 		"<b>Started on:</b> <code>$(hostname)</code>" \
+		"<b>Started at</b> <code>$DATE</code>"
 }
-
+    BUILD_END=$(date +"%s")
+    DIFF=$(($BUILD_END - $BUILD_START))
+    
 config
 clean
 clone
 compile 
-push
-
-    BUILD_END=$(date +"%s")
-    DIFF=$(($BUILD_END - $BUILD_START))
-    echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
+sendZip
+send_Info
+sendInfo "$(echo -e "Total time elapsed: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.")"
+sendStick
