@@ -116,5 +116,5 @@ compile
 sendZip
 send_Info
 sendInfo     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
-sendStick
+
 
