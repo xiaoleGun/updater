@@ -26,12 +26,11 @@ short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 ###### Telegram Function #####
-BOT_API_KEY=$(openssl enc -base64 -d <<< "${bot_token}")
 BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyoip5fJhgE"
 BUILD_SUCCESS="CAACAgIAAx0CRhgx1QABAT9LXpBD86Cre02Eski1hLdeJ6KyBiUAAjQAA7eWaBsoTrkvia1OJRgE"
 
 sendInfo() {
-    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
+    curl -s -X POST https://api.telegram.org/bot/$bot_token/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
             for POST in "${@}"; do
                 echo "${POST}"
             done
@@ -40,11 +39,11 @@ sendInfo() {
 }
 
 sendZip() {
-	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*.zip" https://api.telegram.org/bot$BOT_API_KEY/sendDocument
+	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*.zip" https://api.telegram.org/bot/$bot_token/sendDocument
 }
 
 sendStick() {
-	curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendSticker -d sticker="${1}" -d chat_id=$chat_id &>/dev/null
+	curl -s -X POST https://api.telegram.org/bot/$bot_token/sendSticker -d sticker="${1}" -d chat_id=$chat_id &>/dev/null
 }
 
 
