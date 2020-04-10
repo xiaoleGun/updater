@@ -100,7 +100,7 @@ mkzip() {
 
 send_Info() {
 	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
-                "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit"\
+                "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit" \
 		"<b>Branch:</b> <code>$(git branch --show-current)</code>" \
  		"<b>Started on:</b> <code>$(hostname)</code>" \
 		"<b>Started at</b> <code>$DATE</code>"
@@ -114,6 +114,6 @@ clone
 compile 
 sendZip
 send_Info
-sendInfo 
+sendInfo     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
 sendStick
 
