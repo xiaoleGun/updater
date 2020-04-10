@@ -29,7 +29,6 @@ config() {
 
 clean(){
 	make mrproper
-	make $QWQ mrproper
 	rm -rf ~/$ZIP
 }
 
