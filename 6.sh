@@ -63,11 +63,12 @@ makezip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
-    lftp 
+    lftp <<EOF 
     open sftp://${sftp_server}
     user ${sftp_username} ${sftp_pwd}
     cd /home/frs/project/boosroms/enchilada/Hentai_Kernel
     mput *.zip
+EOF
 
     echo "Sftp uploading done!"
     echo "All done!"
