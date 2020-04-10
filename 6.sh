@@ -31,7 +31,12 @@ BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyo
 BUILD_SUCCESS="CAACAgIAAx0CRhgx1QABAT9LXpBD86Cre02Eski1hLdeJ6KyBiUAAjQAA7eWaBsoTrkvia1OJRgE"
 
 sendInfo() {
-    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML"
+    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
+            for POST in "${@}"; do
+                echo "${POST}"
+            done
+        )"
+&>/dev/null
 }
 
 sendZip() {
@@ -109,5 +114,7 @@ clone
 compile 
 sendZip
 send_Info
-sendInfo "$(echo -e "Total time elapsed: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.")"
+sendInfo 
 sendStick
+
+    echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
