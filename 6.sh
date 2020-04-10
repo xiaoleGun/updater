@@ -27,7 +27,7 @@ QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 ###### Telegram Function #####
 BOT_API_KEY=$(openssl enc -base64 -d <<< "${bot_token}")
-BUILD_FAIL="CAADBQADigADWtMDKL3bJB8yS0yiFgQ"
+BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyoip5fJhgE"
 BUILD_SUCCESS="CAADBQADXgADWtMDKLZjh6sbUrFbFgQ"
 
 sendInfo() {
@@ -98,7 +98,7 @@ mkzip() {
     mv -f ~/$ZIP/$NAME-$VER.zip ~/$WORK/$NAME/$NAME-$VER.zip 
 }
 
-send_Info {
+send_Info() {
 	sendInfo "<b>---- ${NAME} New Kernel ----</b>" \
                 "<b>Kernel Info:</b> <code>[CI Build-$rel_date] $short_commit"\
 		"<b>Kernel Version:</b> <code>$(make kernelversion)</code>" \
