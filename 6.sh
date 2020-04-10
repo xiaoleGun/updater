@@ -28,7 +28,7 @@ QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 ###### Telegram Function #####
 BOT_API_KEY=$(openssl enc -base64 -d <<< "${bot_token}")
 BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyoip5fJhgE"
-BUILD_SUCCESS="CAADBQADXgADWtMDKLZjh6sbUrFbFgQ"
+BUILD_SUCCESS="CAACAgIAAx0CRhgx1QABAT9LXpBD86Cre02Eski1hLdeJ6KyBiUAAjQAA7eWaBsoTrkvia1OJRgE"
 
 sendInfo() {
     curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
