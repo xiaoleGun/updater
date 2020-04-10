@@ -31,16 +31,11 @@ BUILD_FAIL="CAACAgEAAx0CRhgx1QABAT8-XpBDV3twkRxHhq5inot-7YPCJFMAAt0AAxhdAh4v5tyo
 BUILD_SUCCESS="CAACAgIAAx0CRhgx1QABAT9LXpBD86Cre02Eski1hLdeJ6KyBiUAAjQAA7eWaBsoTrkvia1OJRgE"
 
 sendInfo() {
-    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML" -d text="$(
-            for POST in "${@}"; do
-                echo "${POST}"
-            done
-        )"
-&>/dev/null
+    curl -s -X POST https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$chat_id -d "parse_mode=HTML"
 }
 
 sendZip() {
-	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*" https://api.telegram.org/bot$BOT_API_KEY/sendDocument
+	curl -F chat_id="$chat_id" -F document=@"~/$WORK/$NAME/*.zip" https://api.telegram.org/bot$BOT_API_KEY/sendDocument
 }
 
 sendStick() {
