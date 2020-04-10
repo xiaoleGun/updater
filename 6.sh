@@ -64,20 +64,16 @@ makezip() {
     cp -f $OUTFILE ~/$ZIP/
     cd ~/$ZIP
     zip -r $NAME-$VER.zip *
-    
-    echo "File done!"
-}
- 
-zip_upload() {
-    cd ~/$ZIP
-lftp <<EOF
+    lftp <<EOF
     open sftp://${sftp_server}
     user ${sftp_username} ${sftp_pwd}
     cd /home/frs/project/boosroms/enchilada/Hentai_Kernel
     mput *.zip
     bye
 EOF
+
     echo "Sftp uploading done!"
+    echo "All done!"
 }
 
 config
@@ -85,7 +81,6 @@ clean
 clone
 compile
 makezip
-zip_upload
 
     DIFF=$(($BUILD_END - $BUILD_START))
     echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
