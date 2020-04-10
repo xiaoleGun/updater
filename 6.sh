@@ -13,7 +13,6 @@ export TZ=":Asia/China"
 ############################################################
 TOOLDIR="$PWD"
 NAME="HenTaiKernel"
-WORK="push"
 ZIP="AnyKernel3"
 CONFIG_FILE="hentai_defconfig"
 DEVELOPER="boos"
@@ -21,8 +20,6 @@ HOST="hentai"
 OUTFILE="/drone/src/out/arch/arm64/boot/Image.gz-dtb"
 CLANG="clang"
 VER="`date +%m%d-%H%S`"
-rel_date=$(date "+%Y%m%e-%H%S"|sed 's/[ ][ ]*/0/g')
-short_commit="$(cut -c-8 <<< "$(git rev-parse HEAD)")"
 QWQ="-j$(grep -c ^processor /proc/cpuinfo)"
 
 config() {
@@ -34,7 +31,6 @@ clean(){
 	make mrproper
 	make $QWQ mrproper
 	rm -rf ~/$ZIP
-        rm -rf ~/$WORK
 }
 
 clone() {
