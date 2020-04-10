@@ -117,4 +117,3 @@ send_Info
 sendInfo 
 sendStick
 
-    echo "Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
